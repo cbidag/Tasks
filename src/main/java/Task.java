@@ -69,7 +69,7 @@ public class Task {
         //Running time: 0.35000 seconds (find overlap values in small segment file from big segment file)
         //Running time: 0.08000 seconds (find overlap values in big segment file from small segment file, which is about 77% faster)
 
-        // make sure the fist is always the big second file to achieve higher performance.
+        // make sure the first is always the bigger file to achieve higher performance.
         ArrayList<Integer> overlaps = new ArrayList<Integer>();
         int pivot = 0;
         List<int[]> first = seg_a;
