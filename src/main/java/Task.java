@@ -65,7 +65,7 @@ public class Task {
 
         DecimalFormat formatter = new DecimalFormat("#0.00000");
 
-        //The algorithm is sensitive for the size of the two files:
+        //The algorithm is sensitive to the order and size of the two files:
         //Running time: 0.35000 seconds (find overlap values in small segment file from big segment file)
         //Running time: 0.08000 seconds (find overlap values in big segment file from small segment file, which is about 77% faster)
 
