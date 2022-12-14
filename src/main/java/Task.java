@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Task {
 
+    // Please change the file path.
     public static final String SEG_A_FILE = "/Users/wenqiang/Desktop/Tasks/testfile_a.s";
     public static final String SEG_B_FILE = "/Users/wenqiang/Desktop/Tasks/testfile_b.s";
 
@@ -18,14 +19,16 @@ public class Task {
 
         Task task = new Task();
 
+        // read the data from the files.
         List<int[]> seg_a = task.readSegment(SEG_A_FILE);
         List<int[]> seg_b = task.readSegment(SEG_B_FILE);
-
         List<Double> fun_a = task.readFunction(FUN_A_FILE);
         List<Double> fun_b = task.readFunction(FUN_B_FILE);
 
 
         //test (example in the document)
+        // All methods are tested with the example in the document.
+        // in addition, the method findOverlaps (for Task 1) is also tested by exchange the order of two files.
 //        int[] a = {1, 2};
 //        int[] b = {3, 6};
 //        int[] c = {0, 1};
@@ -46,13 +49,13 @@ public class Task {
         System.out.println("overlap: " + overlaps.size());
 
         // Task 2
-        double cor = task.computeCorrelation(fun_a,fun_b);
-        System.out.println(cor);
+        double cor = task.computeCorrelation(fun_a, fun_b);
+        System.out.println("Pearson correlation coefficient: " + cor);
 
         // Task 3
         ArrayList<Integer> index = task.findIndexFromSegment(seg_a);
         double mean = task.computeMeanofCoveredNums(index, fun_b);
-        System.out.println(mean);
+        System.out.println("mean of the covered numbers: " + mean);
 
 
     }
@@ -62,33 +65,40 @@ public class Task {
 
         DecimalFormat formatter = new DecimalFormat("#0.00000");
 
+        //The algorithm is sensitive for the size of the two files:
         //Running time: 0.35000 seconds (find overlap values in small segment file from big segment file)
         //Running time: 0.08000 seconds (find overlap values in big segment file from small segment file, which is about 77% faster)
 
+        // make sure the fist is always the big second file to achieve higher performance.
         ArrayList<Integer> overlaps = new ArrayList<Integer>();
         int pivot = 0;
         List<int[]> first = seg_a;
         List<int[]> second = seg_b;
-        if (seg_a.size() > seg_b.size()) {
+        if (seg_a.size() < seg_b.size()) {
             first = seg_b;
             second = seg_a;
         }
+        System.out.println("first size:" + first.size());
+        System.out.println("second size:" + second.size());
+
         long start = System.currentTimeMillis();
         for (int i = 0; i < first.size(); i++) {
             int length_a = first.get(i)[1] - first.get(i)[0];
-            int[] values_a = new int[length_a];
+            int[] values_a = new int[length_a]; // values in each region (line) in the first segment file
             values_a[0] = first.get(i)[0];
             for (int t = 1; t < length_a; t++) {
                 values_a[t] = values_a[t - 1] + 1;
             }
+            // pivot is used to avoid repeat iteration in the second segment file, since the segment files are in sorted order.
             for (int j = pivot; j < second.size(); j++) {
+                // for each segment in the first file, only segments (in the second file) that have overlap values are iterated.
+                // so that, the second file has been iterated only once
                 if (values_a[length_a - 1] >= second.get(j)[0]) {
                     for (int t = 0; t < length_a; t++) {
-                        if (values_a[t] < second.get(j)[1] && values_a[t] >= second.get(j)[0]) {
+                        if (values_a[t] < second.get(j)[1] && values_a[t] >= second.get(j)[0]) { // identify overlap values
                             overlaps.add(values_a[t]);
                         }
                     }
-
                 } else {
                     if (j > 1) {
                         pivot = j - 1;
