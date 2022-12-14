@@ -8,11 +8,11 @@ import java.util.List;
 
 public class Task {
 
-    public static final String SEG_A_FILE = "testfile_a.s";
-    public static final String SEG_B_FILE = "testfile_b.s";
+    public static final String SEG_A_FILE = "/Users/wenqiang/Desktop/Tasks/testfile_a.s";
+    public static final String SEG_B_FILE = "/Users/wenqiang/Desktop/Tasks/testfile_b.s";
 
-    public static final String FUN_A_FILE = "testfile_a.f";
-    public static final String FUN_B_FILE = "testfile_b.f";
+    public static final String FUN_A_FILE = "/Users/wenqiang/Desktop/Tasks/testfile_a.f";
+    public static final String FUN_B_FILE = "/Users/wenqiang/Desktop/Tasks/testfile_b.f";
 
     public static void main(String[] args) {
 
